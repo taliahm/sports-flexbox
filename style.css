@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+main {
+    display: flex;
+}
+.playing-field {
+    position: relative;
+    height: 500px;
+    background: url(assets/floorSix.jpg);
+    /* background-size: cover; */
+    /* background: darkgreen; */
+}
+
+.twenty {
+    width: 20%;
+}
+.eighty {
+    width: 80%;
+}
+.flex-parent, .flex-parent-guide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50vh;
+}
+.flex-parent, .flex-parent-guide {
+    /* border-top: 2px solid green; */
+    /* border-left: 2px solid pink; */
+    padding: 40px;
+}
+
+/* .flex-parent::before {
+    content: 'main-axis';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 20px;
+}
+
+.flex-parent::after {
+    content: 'cross-axis';
+    display: block;
+    position: absolute;
+    left: -22px;
+    top: 40px;
+    transform: rotate(270deg);
+} */
+
+.flex-child, .flex-child-guide {
+    width: 90px;
+    height: 90px;
+    margin: 12px;
+}
+.flex-child {
+    /* background-image: url(./assets/football.png); */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.flex-child-guide {
+    background: rgba(100, 100, 100, 0.5);
+}
+
+.input {
+    margin-top: 20px;
+}
+.good-job {
+    display: none;
+}
+
+.hold-input {
+    margin: 12px;
+}
+
+.code-input {
+    background: black;
+    color: #39FF14;
+    outline: none;
+    border: none;
+    padding: 20px;
+    font-size: 16px;
+}
+
+.code-input-after {
+    margin: 0;
+}
