@@ -4,6 +4,9 @@
 body {
     margin-top: 20px;
     margin-left: 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+    background: #506c64;
+    color: #220c10;
 }
 
 main {
@@ -11,47 +14,40 @@ main {
 }
 .playing-field {
     position: relative;
-    height: 500px;
+    height: 550px;
     background: url(assets/floorSix.jpg);
     /* background-size: cover; */
     /* background: darkgreen; */
 }
 
 .twenty {
-    width: 20%;
+    width: 30%;
+    margin-right: 20px;
+    background: #75b8c8;
+    padding: 20px;
+}
+
+.twenty h2 {
+    font-size: 28px;
+    margin: 0;
+}
+.twenty .desc {
+    margin: 0;
 }
 .eighty {
-    width: 80%;
+    width: calc(70% - 20px);
 }
 .flex-parent, .flex-parent-guide {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 50vh;
+    /* height: 50vh; */
 }
 .flex-parent, .flex-parent-guide {
-    /* border-top: 2px solid green; */
-    /* border-left: 2px solid pink; */
     padding: 40px;
+    height: 550px;
 }
-
-/* .flex-parent::before {
-    content: 'main-axis';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 20px;
-}
-
-.flex-parent::after {
-    content: 'cross-axis';
-    display: block;
-    position: absolute;
-    left: -22px;
-    top: 40px;
-    transform: rotate(270deg);
-} */
 
 .flex-child, .flex-child-guide {
     width: 90px;
@@ -63,9 +59,17 @@ main {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .flex-child-guide {
-    background: rgba(100, 100, 100, 0.5);
+    background: rgba(255,165,0, 0.5);
+}
+
+.flex-child-guide:first-child {
+    background: rgba(100, 50, 100, 0.5);
 }
 
 .input {
@@ -77,6 +81,8 @@ main {
 
 .hold-input {
     margin: 12px;
+    font-family: 'PT Mono', monospace;
+    font-size: 20px;
 }
 
 .code-input {
@@ -84,8 +90,17 @@ main {
     color: #39FF14;
     outline: none;
     border: none;
-    padding: 20px;
+    padding: 12px;
     font-size: 16px;
+    margin-left: 12px;
+    margin-top: 2px;
+    width: 90%;
+    height: 100px;
+    font-family: 'PT Mono', monospace;
+}
+
+.color-embellish {
+    color: green;
 }
 
 .code-input-after {

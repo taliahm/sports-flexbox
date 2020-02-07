@@ -5,26 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Flexbox Proof of Concept</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Mono|Roboto+Condensed&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssnormalize/cssnormalize-min.css">
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main>
       <section class="twenty">
         <h2>Welcome!</h2>
-        <p>You are the coach of a sports team! Using <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank">flexbox</a> get your players where you need them on the pitch!</p>
+        <p class="desc">You are the coach of a sports team! Using <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank">flexbox</a> get your players where you need them on the pitch!</p>
         <p>Go get em!</p>
         <div class="input">
             <div class="hold-input">
-                <label for="parent-input">.flex-parent {</label>
+                <label for="parent-input">.flex-parent <span class="color-embellish">{</span></label>
                 <div>
               <textarea class="code-input" id="parent-input"></textarea>
             </div>
-              <p class="code-input-after">}</p>
+              <p class="code-input-after"><span class="color-embellish">}</span></p>
             </div>
             <div class="hold-input">
-              <label for="child-input">.flex-child {</label>
+              <label for="child-input">.flex-child <span class="color-embellish">{</span></label>
+                <div>
               <textarea class="code-input" id="child-input" ></textarea>
-              <p class="code-input-after">}</p>
+            </div>
+              <div>
+                <p class="code-input-after"><span class="color-embellish">}</span></p>
+              </div>
             </div>
           </div>
       </section>
@@ -42,11 +48,11 @@
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 height="90px"
-                width="90px"
+                width="80px"
                 version="1.1"
                 x="0px"
                 y="0px"
-                viewBox="0 0 100.013 296.47875"
+                viewBox="0 0 100 296.47875"
                 style="enable-background:new 0 0 100.013 237.183;"
                 xml:space="preserve"
               >
@@ -68,7 +74,7 @@
                   />
                   <path
                   stroke="black"
-                    fill="orange"
+                    fill="maroon"
                     d="M47.689,134.548h4.635v31.469h24.729V85.588c-2.188-14.296-1.711-26.074-0.902-33.521   c-2.614-1.032-4.849-1.309-6.341-1.344c-0.161-0.01-0.322-0.025-0.485-0.025h-4.257c-0.646,9.542-7.148,17.068-15.061,17.068   s-14.415-7.525-15.061-17.068h-4.256c-0.163,0-0.323,0.014-0.484,0.024c-1.492,0.035-3.727,0.311-6.343,1.344   c0.809,7.446,1.286,19.224-0.901,33.519v80.431h24.729V134.548z"
                   />
                   <path
@@ -269,25 +275,28 @@
     ></script>
     <script>
       const questions = {
-        levelOne: {
+        levelThree: {
           rules: "display: flex; justify-content: center",
           separatedRules: ["display:", "flex;", "justify-content:", "center;"],
           numberOfElements: 4
         },
-        levelTwo: {
+        levelOne: {
           rules: "display: flex; flex-direction: column; align-items: flex-end",
           numberOfElements: 4
         },
-        levelThree: {
+        levelTwo: {
           rules: "display: flex",
           childRules: {
             element: 2,
             style: "align-self: flex-end"
           }
+        },
+        levelFour: {
+          rules: "display: flex, flex-direction: row-reverse;",
         }
       };
       const LS_KEY = "juno-football-flexbox";
-      const questionOrder = ["levelOne", "levelTwo", "levelThree"];
+      const questionOrder = ["levelOne", "levelTwo", "levelThree", "levelFour"];
       let currentQuestion = 0;
       const inputListener = () => {
         $("#parent-input").on("input", e => {
@@ -305,6 +314,7 @@
       };
       const reStyleChildElements = styles => {
         const currentQuestionData = getCurrentQuestionData();
+        console.log(currentQuestionData, 'say what?');
         if (!currentQuestionData.childRules) return;
         saveToLocalStorage("child", styles);
         const { element, style } = currentQuestionData.childRules;
@@ -346,6 +356,7 @@
         const currentQuestionData = getCurrentQuestionData();
         console.log(currentQuestionData, "current question data");
         const { childRules, rules } = currentQuestionData;
+        console.log(childRules, 'for guide children?');
         updateGuide(rules);
         updateGuideChildren(childRules);
       };
@@ -360,7 +371,11 @@
         if (!rules) return;
         const { element, style } = rules;
         $(".flex-child-guide").each((index, el) => {
+          console.log('this be running??');
+          console.log(style, 'this be defined?');
           if (index === element) {
+            console.log('they ever equal eachother?');
+            console.log(el, 'el?');
             $(el).attr("style", style);
           }
         });
@@ -369,7 +384,10 @@
       const resetStep = () => {
         $(".good-job").css("display", "none");
         $("#parent-input").val("");
+        $('#child-input').val("");
         $(".flex-parent").attr("style", "");
+        $(".flex-child").attr("style", "");
+        $(".flex-child-guide").attr("style", "");
       };
 
       const initiateFirstQuestion = questionNumber => {
