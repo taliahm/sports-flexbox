@@ -19,19 +19,22 @@
             <div class="hold-input">
                 <label for="parent-input">.flex-parent <span class="color-embellish">{</span></label>
                 <div>
-              <textarea class="code-input" id="parent-input"></textarea>
+              <textarea class="code-input" id="parent-input" placeholder="/* Your CSS here*/"></textarea>
             </div>
               <p class="code-input-after"><span class="color-embellish">}</span></p>
             </div>
             <div class="hold-input">
               <label for="child-input">.flex-child <span class="color-embellish">{</span></label>
                 <div>
-              <textarea class="code-input" id="child-input" ></textarea>
+              <textarea class="code-input" id="child-input" placeholder="/* Your CSS here*/"></textarea>
             </div>
               <div>
                 <p class="code-input-after"><span class="color-embellish">}</span></p>
               </div>
             </div>
+          </div>
+          <div class="hold-help-button">
+            <button type="button" id="help-btn">Help!</button>
           </div>
       </section>
       <section class="eighty">
@@ -52,7 +55,7 @@
                 version="1.1"
                 x="0px"
                 y="0px"
-                viewBox="0 0 100 296.47875"
+                viewBox="0 -20 100 296.47875"
                 style="enable-background:new 0 0 100.013 237.183;"
                 xml:space="preserve"
               >
@@ -106,7 +109,7 @@
                 version="1.1"
                 x="0px"
                 y="0px"
-                viewBox="0 0 100.013 296.47875"
+                viewBox="0 -20 100.013 296.47875"
                 style="enable-background:new 0 0 100.013 237.183;"
                 xml:space="preserve"
               >
@@ -160,7 +163,7 @@
                 version="1.1"
                 x="0px"
                 y="0px"
-                viewBox="0 0 100.013 296.47875"
+                viewBox="0 -20 100.013 296.47875"
                 style="enable-background:new 0 0 100.013 237.183;"
                 xml:space="preserve"
               >
@@ -214,7 +217,7 @@
                 version="1.1"
                 x="0px"
                 y="0px"
-                viewBox="0 0 100.013 296.47875"
+                viewBox="0 -20 100.013 296.47875"
                 style="enable-background:new 0 0 100.013 237.183;"
                 xml:space="preserve"
               >
@@ -262,164 +265,44 @@
           </div>
         </section>
         <div class="good-job">
-          <h2>Great work! You've beat the level.</h2>
+          <h2>Great work! You beat the level.</h2>
           <p>Next one?</p>
-          <button type="button" id="next">Ready!</button>
+          <button class="good-job-button" type="button" id="next">Ready!</button>
         </div>
       </section>
+      <div id="help" class="help-model" aria-role="model">
+        <div id="inner-help" class="help-model-inner">
+          <button id="help-close" type="button">x</button>
+          <div class="help-model-inner-half">
+          <h2>What Am I Doing Here? 🤔</h2>
+          <p>Using the wonderful CSS methodology, flexbox, try to move the players into the boxes that match their uniform's colour and symbols.</p>
+          <p>Once all the players are succesfully contained within the placeholder, you will be congraulted and prompted to move to the next level.</p>
+          <p>But note! Sometimes the players will be in their boxes, but your CSS syntax might not be perfect, take another look and make sure you've got semicolons everywhere you need them!</p>
+          <p>In order to apply the styles, type your CSS into either the of the inputs. The 'flex-parent' rules will be applied to the element that contains all the flex items.</p>
+          <p>While you cannot control which flex-child to add CSS to, the game will ensure you are targetting the correct flex-child when needed.</p>
+          <p>Not all levels will require you to write CSS for both the flex-parent and the flex-child.</p>
+        </div>
+        <div class="help-model-inner-half">
+          <figure class="help-modal-example-image">
+            <img src="./assets/example.png" alt="">
+          </figure>
+          <figcaption>A successfully placed player.</figcaption>
+        </div>
+        </div>
+      </div>
     </main>
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"
     ></script>
-    <script>
-      const questions = {
-        levelThree: {
-          rules: "display: flex; justify-content: center",
-          separatedRules: ["display:", "flex;", "justify-content:", "center;"],
-          numberOfElements: 4
-        },
-        levelOne: {
-          rules: "display: flex; flex-direction: column; align-items: flex-end",
-          numberOfElements: 4
-        },
-        levelTwo: {
-          rules: "display: flex",
-          childRules: {
-            element: 2,
-            style: "align-self: flex-end"
-          }
-        },
-        levelFour: {
-          rules: "display: flex, flex-direction: row-reverse;",
-        }
-      };
-      const LS_KEY = "juno-football-flexbox";
-      const questionOrder = ["levelOne", "levelTwo", "levelThree", "levelFour"];
-      let currentQuestion = 0;
-      const inputListener = () => {
-        $("#parent-input").on("input", e => {
-          reStyleParentContainer(e.target.value);
-        });
-        $("#child-input").on("input", e => {
-          reStyleChildElements(e.target.value);
-        });
-      };
-
-      const reStyleParentContainer = styles => {
-        saveToLocalStorage("parent", styles);
-        $(".flex-parent").attr("style", styles);
-        checkForCompletion();
-      };
-      const reStyleChildElements = styles => {
-        const currentQuestionData = getCurrentQuestionData();
-        console.log(currentQuestionData, 'say what?');
-        if (!currentQuestionData.childRules) return;
-        saveToLocalStorage("child", styles);
-        const { element, style } = currentQuestionData.childRules;
-        $(".flex-child").each((index, el) => {
-          if (index === element) {
-            $(el).attr("style", styles);
-          }
-        });
-        checkForCompletion();
-      };
-      const checkForCompletion = () => {
-        let matched = 0;
-        $(".flex-child-guide").each((index, el) => {
-          const bounds = el.getBoundingClientRect();
-          const { x, y } = bounds;
-          $(".flex-child").each((_, child) => {
-            const childBounds = child.getBoundingClientRect();
-            const { x: childX, y: childY } = childBounds;
-            if (childX === x && childY === y) {
-              matched = matched + 1;
-            }
-          });
-        });
-        if (matched === 4) {
-          congratulatePlayer();
-        }
-      };
-
-      const congratulatePlayer = () => {
-        $(".good-job").css("display", "block");
-      };
-
-      const goToNextQuestion = e => {
-        console.log("next question");
-        e.preventDefault();
-        console.log("go to next uestions?");
-        currentQuestion = currentQuestion + 1;
-        saveToLocalStorage("currentQuestion", currentQuestion);
-        const currentQuestionData = getCurrentQuestionData();
-        console.log(currentQuestionData, "current question data");
-        const { childRules, rules } = currentQuestionData;
-        console.log(childRules, 'for guide children?');
-        updateGuide(rules);
-        updateGuideChildren(childRules);
-      };
-
-      const updateGuide = styles => {
-        console.log(styles, "styled in update guide");
-        $(".flex-parent-guide").attr("style", styles);
-        resetStep();
-      };
-
-      const updateGuideChildren = rules => {
-        if (!rules) return;
-        const { element, style } = rules;
-        $(".flex-child-guide").each((index, el) => {
-          console.log('this be running??');
-          console.log(style, 'this be defined?');
-          if (index === element) {
-            console.log('they ever equal eachother?');
-            console.log(el, 'el?');
-            $(el).attr("style", style);
-          }
-        });
-      };
-
-      const resetStep = () => {
-        $(".good-job").css("display", "none");
-        $("#parent-input").val("");
-        $('#child-input').val("");
-        $(".flex-parent").attr("style", "");
-        $(".flex-child").attr("style", "");
-        $(".flex-child-guide").attr("style", "");
-      };
-
-      const initiateFirstQuestion = questionNumber => {
-        const firstParentStyles = questions[questionNumber].rules;
-        const firstChildStyles = questions[questionNumber].childRules;
-        updateGuide(firstParentStyles);
-        updateGuideChildren(firstChildStyles);
-      };
-
-      const getCurrentQuestionData = () => {
-        console.log("in get current", currentQuestion);
-        const currentLabel = questionOrder[currentQuestion];
-        console.log("current label??", currentLabel);
-        return questions[currentLabel];
-      };
-
-      const saveToLocalStorage = (key, data) => {
-        const toSetKey = `${LS_KEY}-${currentQuestion}-${key}`;
-        localStorage.setItem(toSetKey, data);
-      };
-      const getFromLocalStorage = key => {
-        const toGetKey = `${LS_KEY}-${currentQuestion}-${key}`;
-        return localStorage.getItem(toGetKey);
-      };
-      // TODO:
-      // implement local storage retrieval.
-      // implement back functionality
-      $(function() {
-        inputListener();
-        initiateFirstQuestion("levelOne");
-        $("#next").on("click", goToNextQuestion);
-      });
-    </script>
+    <script
+			  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+			  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+			  crossorigin="anonymous"></script>
+    <script src="script.js"></script>
   </body>
 </html>
+<!-- thoughts: -->
+<!-- use juno brand colours? -->
+<!-- check that string ends with ';' in order for rules to be applied -->
